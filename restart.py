@@ -5,7 +5,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 while True:
-
 	try:
 		print('Loading Driver')
 		WINDOW_SIZE = "1920,1080"
@@ -44,6 +43,5 @@ while True:
 		print('Done')
 		break
 	except Exception as e:
-
 		print("Error while trying to restart router: ",e)
 		print("Retrying...")
