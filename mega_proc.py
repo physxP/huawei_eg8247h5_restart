@@ -15,6 +15,9 @@ def start_mega():
     print('Starting mega')
     if platform.system() == 'Darwin':
         subprocess.call(['open', '-a', 'MEGAsync'])
+        while len(get_matching_procs())==0:
+            time.sleep(1)
+        print(get_matching_procs())
     else:
         raise Exception(f"Starting mega not implemented for platform{platform.system()}")
     print('Done!')

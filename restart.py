@@ -44,7 +44,7 @@ def restart_router():
 			driver.switch_to.alert.accept()
 			time.sleep(30)
 			driver.quit()
-			print('Done')
+			print('Done!')
 			break
 		except Exception as e:
 			print("Error while trying to restart router: ",e)

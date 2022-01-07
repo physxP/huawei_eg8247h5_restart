@@ -10,7 +10,7 @@ def net_usage():
     old_value = 0    
 
     while True:
-        new_value = psutil.net_io_counters().bytes_sent + psutil.net_io_counters().bytes_recv
+        new_value =psutil.net_io_counters().bytes_recv
 
         if old_value:
             yield (new_value - old_value)/1024
@@ -19,6 +19,7 @@ def net_usage():
 
 
 def process_net_usage():
+    old_usage = -1
     procs = []
     check_procs = True
     while True:
@@ -30,10 +31,21 @@ def process_net_usage():
                 check_procs=True
                 continue
             if platform.system() == 'Darwin':
-                out = subprocess.run( f"nettop -Pp {procs[0].pid} -J bytes_in -L 1 -x".split(" "),capture_output=True)
+                out = subprocess.run( f"nettop -Pp {procs[0].pid} -J bytes_in -L 1 -x -d".split(" "),capture_output=True)
                 output = out.stdout.decode('ascii')
                 df = pd.read_table(StringIO(output,newline='\n'),sep=',')
-                yield int(df['bytes_in'])/1024
+                bytes = df['bytes_in'].to_list()
+                if len(bytes)>0:
+                    usage =  int(bytes[0])/1024
+                    if old_usage ==-1:
+                        old_usage = usage
+                    if abs(usage-old_usage)<10:
+                        yield 0
+                    else:
+                        yield usage
+                    old_usage = usage
+                else:
+                    continue
                 
             else:
                 raise Exception(f"Not implemented for {platform.system()}")
