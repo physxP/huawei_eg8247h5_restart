@@ -3,10 +3,11 @@ import subprocess
 import platform
 import time
 
+def get_matching_procs(PROCNAME = "MEGAclient"):
+    return [proc for proc in psutil.process_iter() if PROCNAME.lower() in proc.name().lower()]
 def kill_mega(PROCNAME = "MEGAclient"):
     print(f'Trying to kill process: {PROCNAME}')
-    for proc in psutil.process_iter():
-        if PROCNAME.lower() in proc.name().lower():
+    for proc in get_matching_procs(PROCNAME):
             print(f'Killing {proc.name()}')
             proc.kill()
 

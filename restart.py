@@ -48,6 +48,7 @@ def restart_router():
 			break
 		except Exception as e:
 			print("Error while trying to restart router: ",e)
+			time.sleep(30)
 			print("Retrying...")
 if __name__ == '__main__':
 	restart_router();
