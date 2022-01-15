@@ -10,3 +10,5 @@ six
 urllib3
 webencodings
 webdriver-manager
+pandas
+psutil

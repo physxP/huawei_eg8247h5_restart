@@ -52,9 +52,12 @@ def process_net_usage():
             check_procs = False
         else:
             check_procs = True
-    
+def process_net_usage_sample(n=5):
+    usage_gen  = process_net_usage()
+    for i in range(n-1):
+        next(usage_gen)
+    return next(usage_gen)
+
+
 if __name__ == '__main__':
-    for i in process_net_usage():
-    # while True:
-        print(i)
-        time.sleep(1)
+    print(process_net_usage_sample())
